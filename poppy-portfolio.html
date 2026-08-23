@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poppy — Roblox Developer & GFX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+<style>
+
+    :root{
+    --bg:#0094d9;
+    --bg-panel:#00aeff;
+    --bg-panel-2:#00aeff;
+    --pink:#0055ff;
+    --cyan:#0055fd;
+    --gold:#ffffff;
+    --text:#f6efe9;
+    --muted:#bdf8ff;
+    --line: rgba(156, 207, 255, 0.76);
+    --glowingdot: #64b4ff;
+    --actualglowingdot: #79ceff;
+    --bg-panel3: #fdfdfd;
+    --titles:#b8e5ff;
+    --faqs:#0076de;
+  }
+  /* PRICING DISCOUNT BADGES & PRICES */
+  .discount-badge {
+    position: absolute;
+    top: -12px;
+    right: 24px;
+    background: linear-gradient(135deg, #ff007b, #ff55a3);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(255, 0, 123, 0.4);
+    animation: pulseBadge 2s infinite;
+    z-index: 10;
+  }
+  
+  @keyframes pulseBadge {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); box-shadow: 0 4px 20px rgba(255, 0, 123, 0.6); }
+    100% { transform: scale(1); }
+  }
+
+  .price-container {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .price-old {
+    font-size: 1.1rem;
+    color: var(--muted);
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  .price-new {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .wise-note {
+    font-size: 0.75rem;
+    color: var(--cyan);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  /* FAQ (Accordion) */
+  .faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .faq-item {
+    background: var(--faqs);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .faq-item:hover {
+    border-color: var(--cyan);
+  }
+
+  /* Gizli Checkbox (Tıklamayı algılamak için kullanıyoruz, JavaScript'e gerek kalmıyor) */
+  .faq-item input[type="checkbox"] {
+    display: none;
+  }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 26px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* Artı İkonu */
+  .faq-icon {
+    font-size: 1.2rem;
+    color: var(--cyan);
+    transition: transform 0.3s ease;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 26px;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Checkbox işaretlendiğinde (Tıklandığında) cevabı göster ve ikonu döndür */
+  .faq-item input[type="checkbox"]:checked ~ .faq-answer {
+    max-height: 300px; /* Cevabın sığacağı kadar büyük bir değer */
+    padding-bottom: 22px;
+  }
+
+  .faq-item input[type="checkbox"]:checked ~ .faq-question .faq-icon {
+    transform: rotate(45deg); /* Artıyı Çarpı (X) yapar */
+    color: var(--pink);
+  }
+  /* PACKAGES (Basic, Standard, Premium) */
+  .pricing-grid {
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 24px; 
+    margin-top: 40px;
+  }
+  @media (max-width: 850px) { 
+    .pricing-grid { grid-template-columns: 1fr; } /* Telefonda alt alta dizilir */
+  }
+  
+  .pricing-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  
+  .pricing-card:hover {
+    border-color: var(--pink);
+    transform: translateY(-5px);
+  }
+
+  .pricing-card h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .pricing-card p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .pricing-features {
+    list-style: none;
+    margin-bottom: 34px;
+    flex-grow: 1; /* Butonların hep en altta hizalı kalmasını sağlar */
+  }
+
+  .pricing-features li {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+  }
+
+  /* Listelerin başına küçük bir nokta/işaret ekler */
+  .pricing-features li::before {
+    content: '◆';
+    color: var(--cyan);
+    font-size: 0.7rem;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    /* En alta linear-gradient ekledik ve üst rengi açık mavi (#5ec4ff) yaptık */
+    background:
+      radial-gradient(60% 50% at 15% 0%, rgba(14, 54, 255, 0.1), transparent 60%),
+      radial-gradient(50% 40% at 90% 10%, rgba(78, 146, 255, 0.08), transparent 60%),
+      linear-gradient(to bottom, #5ec4ff, var(--bg)); 
+      
+    background-attachment: fixed; /* Arka planı sayfaya sabitler, kaydırma ile hareket etmez */
+    
+    color:var(--text);
+    font-family:'Fredoka', sans-serif;
+    font-weight: 400;
+    line-height:1.6;
+    overflow-x:hidden;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+  ::selection{background:var(--text); color:#0f121c;}
+
+  /* Başlıklardaki gölgeyi biraz daha belirgin yaptık ama yine de soft */
+   h2, h3, .brand {
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .mono{font-weight: 400;}
+  .display{font-weight: 600;} /* 700'den 600'e inceltildi */
+
+  a{color:inherit; text-decoration:none;}
+
+  /* NAV */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 6vw;
+    background:rgba(18, 115, 225, 0.65);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:600; font-size:1.15rem; letter-spacing:0.5px;} /* 800 -> 600 */
+  .brand-dot{width:9px; height:9px; border-radius:50%; background:var(--actualglowingdot); box-shadow:0 0 12px var(--actualglowingdot); animation:pulse 2.4s ease-in-out infinite;}
+  .nav-links{display:flex; gap:34px; font-size:0.92rem; font-weight: 400;} /* 500 -> 400 */
+  .nav-links a{color:var(--muted); transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{
+    font-size:0.8rem; font-weight: 500; /* 600 -> 500 */
+    border:1px solid var(--text); color:var(--text);
+    padding:8px 16px; border-radius:999px; transition:all .2s;
+  }
+  .nav-cta:hover{background:var(--glowingdot); color:#2f70fb;}
+
+  @media (max-width:760px){ .nav-links{display:none;} }
+
+  /* HERO */
+  .hero{
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:140px 6vw 80px;
+    position:relative;
+  }
+  .open-sign{
+    display:inline-flex; align-items:center; gap:9px; width:fit-content;
+    padding:7px 16px; border-radius:999px;
+    border:1px solid rgba(43, 57, 255, 0.4);
+    background:rgba(22, 53, 255, 0.07);
+    font-size:0.78rem; font-weight: 500; letter-spacing:1.5px; /* 600 -> 500 */
+    color:var(--cyan); margin-bottom:28px; text-transform: uppercase;
+    animation:glow 3s ease-in-out infinite;
+  }
+  .open-sign::before{content:'●'; font-size:0.6rem;}
+  @keyframes glow{ 0%,100%{opacity:1;} 50%{opacity: 0.7;;} }
+  @keyframes pulse{ 0%,100%{transform:scale(1); opacity:1;} 50%{transform:scale(1.3); opacity:.6;} }
+
+  .hero h1{
+    font-size: clamp(3.2rem, 11vw, 8rem);
+    font-weight: 600; 
+    line-height: 0.92; 
+    letter-spacing: -0.02em; 
+    color: var(--text); /* Sadece düz, soft bir krem rengi yapar */
+ 
+  }
+  .hero-sub{
+    margin-top:22px; max-width:560px; font-size:1.08rem; color:var(--muted); font-weight: 300;
+  }
+  .hero-sub strong{color:var(--text); font-weight:500;}
+
+  .hero-ctas{display:flex; gap:16px; margin-top:36px; flex-wrap:wrap;}
+  .btn{
+    font-size:0.85rem; font-weight: 500;
+    padding:13px 26px; border-radius:10px; border:1px solid var(--line);
+    display:inline-flex; align-items:center; gap:8px; transition:all .2s;
+  }
+  .btn-primary{background:var(--pink); color:#fffeff; border-color:var(--pink); font-weight:500;} /* 600 -> 500 */
+  .btn-primary:hover{box-shadow:0 0 24px rgba(24, 40, 254, 0.5); transform:translateY(-2px);}
+  .btn-ghost{color:var(--text); border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--cyan); color:var(--cyan);}
+
+  /* MARQUEE - cafe LED board */
+/* MARQUEE - cafe LED board */
+  .marquee-wrap{
+    margin-top:70px; 
+    border-top:1px solid var(--line); 
+    border-bottom:1px solid var(--line);
+    padding:16px 0; 
+    overflow:hidden; 
+    background:var(--bg-panel);
+    
+    /* YENİ EKLENEN KODLAR (Ekrana Tam Oturtmak İçin) */
+    width: 100vw; 
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+  .marquee{display:flex; width:max-content; animation:scroll 26s linear infinite;}
+  .marquee span{
+    font-size:0.95rem; color:var(--gold); font-weight: 500; /* 600 -> 500 */
+    padding:0 2.4rem; white-space:nowrap; letter-spacing:1px;
+  }
+  .marquee span::after{content:'◆'; color:var(--muted); margin-left:rem; font-size:0.7rem;}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @media (prefers-reduced-motion: reduce){
+    .marquee{animation:none;} .open-sign{animation:none;} .brand-dot{animation:none;}
+  }
+
+  /* SECTION SHELL */
+  section{padding:120px 6vw;}
+  .eyebrow{
+    font-size:0.78rem; font-weight: 500; letter-spacing:2px; /* 600 -> 500 */
+    color:var(--titles); text-transform:uppercase; margin-bottom:14px;
+  }
+  h2{font-size:clamp(2rem,4.5vw,3.2rem); font-weight:600; letter-spacing:-0.01em;} /* 800 -> 600 */
+
+  /* ABOUT */
+  .about-grid{
+    display:grid; grid-template-columns:1fr 1.15fr; gap:70px; margin-top:56px;
+  }
+  @media (max-width:900px){ .about-grid{grid-template-columns:1fr;} }
+  .about-text p{color:var(--muted); font-size:1.02rem; margin-top:18px; max-width:480px; font-weight: 400;}
+
+  .menu-board{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:18px;
+    padding:38px 34px; position:relative;
+  }
+ .menu-board::before{
+    content:'Experience';
+    position:absolute; 
+    top:-13px; 
+    left:32px; 
+    background: var(--bg-panel3); /* Arka plan rengini panel ile aynı yaptık */
+    padding: 2px 12px; /* Etrafında biraz daha yumuşak boşluk bıraktık */
+    border: 2px solid var(--glowingdot); /* İŞTE BURAYA ÇERÇEVEYİ EKLEDİK */
+    border-radius: 6px; /* Kenarlarını hafifçe ovalleştirdik */
+    font-size:0.72rem; 
+    font-weight: 500; 
+    letter-spacing:2px; 
+    color:var(--bg-panel-2);
+  }
+  .menu-cat{margin-bottom:26px;}
+  .menu-cat:last-child{margin-bottom:0;}
+  .menu-cat h3{
+    font-size:1.05rem; color:var(--gold);
+    margin-bottom:12px; font-weight:600; /* 700 -> 600 */
+  }
+  .menu-item{
+    display:flex; align-items:baseline; gap:8px; padding:6px 0;
+    font-size:0.96rem; font-weight: 400; /* 500 -> 400 */
+  }
+  .menu-item .name{color:var(--text);}
+  .menu-item .dots{
+    flex:1; border-bottom:1px dotted rgba(246,239,233,0.22); transform:translateY(-4px);
+  }
+  .menu-item .tag{font-size:0.75rem; font-weight: 400; color:var(--muted);}
+
+  /* PROJECTS */
+  .placeholder-tile{
+    position:relative; border-radius:14px; overflow:hidden;
+    background:
+      repeating-linear-gradient(135deg, var(--bg-panel-2), var(--bg-panel-2) 12px, var(--bg-panel) 12px, var(--bg-panel) 24px);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column; gap:8px;
+    transition:border-color .25s, transform .25s;
+    aspect-ratio:4/3;
+  }
+  .placeholder-tile:hover{border-color:var(--pink); transform:translateY(-4px);}
+  .placeholder-tile svg{width:26px; height:26px; opacity:.5;}
+  .placeholder-tile span{
+    font-size:0.68rem; font-weight: 400; color:var(--muted);
+    letter-spacing:1px; text-align:center; padding:0 10px;
+  }
+
+  .project-feature{margin-top:56px;}
+  .project-feature-head{
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:14px;
+    margin-bottom:26px;
+  }
+  .project-feature-head h3{font-size:1.9rem; font-weight:600;} /* 800 -> 600 */
+  .project-feature-head p{color:var(--muted); max-width:420px; font-size:0.95rem; font-weight: 400;}
+  .badge-num{
+    font-size:0.75rem; font-weight: 500; color:var(--cyan);
+    border:1px solid #0055fd; /* ÇERÇEVE RENGİ BEYAZ OLDU */
+    padding:5px 12px; border-radius:999px;
+  }
+  .gallery-4{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  @media (max-width:800px){ .gallery-4{grid-template-columns:repeat(2,1fr);} }
+
+  .gfx-head{margin-top:100px;}
+  .gallery-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:30px;}
+  @media (max-width:800px){ .gallery-grid{grid-template-columns:repeat(2,1fr);} }
+
+  /* CONTACT */
+  .contact-panel{
+    margin-top:50px; border:1px solid var(--line); border-radius:22px;
+    background:linear-gradient(135deg, var(--bg-panel), var(--bg-panel-2));
+    padding:60px 6vw; text-align:center; position:relative; overflow:hidden;
+  }
+  .contact-panel::after{
+    content:''; position:absolute; inset:0;
+    /* Parlamayı beyaz yaptık (şeffaflığı 0.15) */
+    background:radial-gradient(40% 60% at 50% 0%, rgba(255, 255, 255, 0.3), transparent 70%);
+    pointer-events:none;
+  }
+  .contact-panel h2{margin-bottom:10px;}
+  .contact-panel p{color:var(--muted); margin-bottom:34px; font-weight: 400;}
+  .contact-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .discord-tag{
+    margin-top:30px; font-size:0.85rem; font-weight: 400; color:var(--muted); /* 500 -> 400 */
+  }
+  .discord-tag b{color:var(--gold); font-weight: 500;}
+
+  footer{
+    padding:34px 6vw; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:0.75rem; font-weight: 400; color:var(--muted); /* 500 -> 400 */
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><span class="brand-dot"></span>Poppy</div>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#about">About Me</a>
+    <a href="#projects">Projects</a>
+    <a href="#packages">Packages</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="#contact">Join Discord→</a>
+</nav>
+
+<section class="hero" id="home">
+  <div class="open-sign">currently available · roblox dev</div>
+  <h1 class="display">Poppy</h1>
+  <p class="hero-sub">Hi, I'm <strong>Poppy</strong>. I've been developing games on Roblox since 2019, working in <strong>scripting, building, modeling, and GFX</strong>. I've been hired by many cafe and restaurant group owners.</p>
+  <div class="hero-ctas">
+    <a class="btn btn-primary" href="#contact">Join Discord Server</a>
+    <a class="btn btn-ghost" href="#projects">View Projects</a>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee mono">
+      <span>QUASAR CAFE</span><span>VERATTO</span><span>BEAN BAR CAFE</span><span>TASTIEZ CAFE</span><span>BREW'D</span><span>KAWAII PASTEL LIVING HOTEL</span>
+      <span>QUASAR CAFE</span><span>VERATTO</span><span>BEAN BAR CAFE</span><span>TASTIEZ CAFE</span><span>BREW'D</span><span>KAWAII PASTEL LIVING HOTEL</span>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="eyebrow">About me</div>
+  <h2>From writing code <br>to designing scenes.</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I've been making games on Roblox since 2019. Over time, I've honed my skills in scripting, building, modeling, and GFX.</p>
+      <p>I've been commissioned by many cafe and restaurant group owners on Roblox, making a place feel right is just as much a part of my job as designing it.</p>
+    </div>
+    <div class="menu-board">
+      <div class="menu-cat">
+        <h3>Founder (Creator)</h3>
+        <div class="menu-item"><span class="name">Quasar Cafe</span><span class="dots"></span><span class="tag">10K members</span></div>
+        <div class="menu-item"><span class="name">Veratto</span><span class="dots"></span><span class="tag">creator</span></div>
+        <div class="menu-item"><span class="name">Kawaii Pastel Living Hotel</span><span class="dots"></span><span class="tag">creator</span></div>
+      </div>
+      <div class="menu-cat">
+        <h3>Developer</h3>
+        <div class="menu-item"><span class="name">Bean Bar Cafe</span><span class="dots"></span><span class="tag">dev</span></div>
+        <div class="menu-item"><span class="name">Tastiez Cafe</span><span class="dots"></span><span class="tag">dev</span></div>
+        <div class="menu-item"><span class="name">Brew'd</span><span class="dots"></span><span class="tag">dev</span></div>
+      </div>
+      <div class="menu-cat">
+        <h3>GFX Designer</h3>
+        <div class="menu-item"><span class="name">wy4o</span><span class="dots"></span><span class="tag">gfx</span></div>
+        <div class="menu-item"><span class="name">McDonalds Roleplays</span><span class="dots"></span><span class="tag">gfx</span></div>
+        <div class="menu-item"><span class="name">At Home Studios</span><span class="dots"></span><span class="tag">gfx</span></div>
+        <div class="menu-item"><span class="name">ToxicLove</span><span class="dots"></span><span class="tag">gfx</span></div>
+        <div class="menu-item"><span class="name">Tailgate</span><span class="dots"></span><span class="tag">gfx</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="eyebrow">Projects</div>
+  <h2>My work</h2>
+
+  <div class="project-feature">
+    <div class="project-feature-head">
+      <div>
+        <h3>Quasar Cafe</h3>
+        <p>I created this game and managed the group until it reached 10,000 members.</p>
+      </div>
+      <span class="badge-num">10,000 MEMBERS</span>
+    </div>
+    <div class="gallery-4">
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>QUASAR CAFE — IMAGE 1</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>QUASAR CAFE — IMAGE 2</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>QUASAR CAFE — IMAGE 3</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>QUASAR CAFE — IMAGE 4</span></div>
+    </div>
+  </div>
+
+  <div class="gfx-head">
+    <div class="project-feature-head">
+      <div>
+        <h3>GFX Commissions</h3>
+        <p>A selection of GFX works I've created for various Roblox groups.</p>
+      </div>
+      <span class="badge-num">9 WORKS</span>
+    </div>
+    <div class="gallery-grid">
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 01</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 02</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 03</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 04</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 05</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 06</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 07</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 08</span></div>
+      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 09</span></div>
+    </div>
+  </div>
+</section>
+<section id="packages">
+  <div class="eyebrow">Packages</div>
+  <h2>Choose your plan.</h2>
+  
+  <div class="pricing-grid">
+    
+    <!-- BASIC KUTUSU -->
+    <div class="pricing-card">
+      <h3>Basic</h3>
+      <div class="price-container" style="margin-bottom: 24px;">
+        <span class="price-new">$50</span>
+      </div>
+      <p>Perfect for a basic Cafe.</p>
+      <ul class="pricing-features">
+        <li>Small Map & Cafe Build</li>
+        <li>Admin, Staff System</li>
+        <li>Cafe System, Drinks and Food</li>
+        <li>Marketplace Integration</li>
+        <li>Animations</li>
+      </ul>
+      <a class="btn btn-primary" href="#contact" style="justify-content: center;">Select Basic</a>
+    </div>
+
+    <!-- STANDARD KUTUSU -->
+    <div class="pricing-card">
+      <div class="discount-badge">10% OFF</div>
+      <h3>Standard</h3>
+      <div class="price-container">
+        <span class="price-old">$100</span>
+        <span class="price-new">$90</span>
+      </div>
+      <div class="wise-note">*Exclusive discount for Wise payments</div>
+      
+      <p style="margin-top:-10px;">The most popular choice for growing Roblox groups.</p>
+      <ul class="pricing-features">
+        <li>Medium Map & Cafe Build</li>
+        <li>Advanced Scripting (GUI, Tools)</li>
+        <li>In-game currency system</li>
+        <li>Merch Store, Application Center, Training Center</li>
+      </ul>
+      <a class="btn btn-primary" href="#contact" style="justify-content: center;">Select Standard</a>
+    </div>
+
+    <!-- PREMIUM KUTUSU -->
+    <div class="pricing-card">
+      <div class="discount-badge">10% OFF</div>
+      <h3>Premium</h3>
+      <div class="price-container">
+        <span class="price-old">$300</span>
+        <span class="price-new">$270</span>
+      </div>
+      <div class="wise-note">*Exclusive discount for Wise payments</div>
+      
+      <p style="margin-top:-10px;">Full-scale development with everything you need.</p>
+      <ul class="pricing-features">
+        <li>Large Map & Detailed Interior</li>       
+        <li>Complex Scripting Systems</li>
+        <li>Custom 3D Models & UI</li>
+      </ul>
+      <a class="btn btn-primary" href="#contact" style="justify-content: center;">Select Premium</a>
+    </div>
+
+  </div>
+</section>
+<section id="contact">
+  <div class="eyebrow">Contact</div>
+  <div class="contact-panel">
+    <h2 class="display">Got a project in mind?</h2>
+    <p>Drop a message on Discord, let's talk.</p>
+    <div class="contact-row">
+      <a class="btn btn-primary" href="https://discord.com/invite/pDTDwcpbKM" target="_blank" rel="noopener">Join Discord Server</a>
+      <a class="btn btn-ghost" href="https://www.fiverr.com/users/odevvv" target="_blank" rel="noopener">My Fiverr Profile</a>
+    </div>
+    <div class="discord-tag">Discord: <b>@pxppv</b> &nbsp;·&nbsp; Server: <b>tiny.cc/PoppyRoblox</b></div>
+  </div>
+</section>
+<section id="faq">
+  <div class="eyebrow">FAQ</div>
+  <h2 style="text-align: center;">Frequently asked questions.</h2>
+  
+  <div class="faq-container">
+    
+    <!-- Soru 1 -->
+    <div class="faq-item">
+      <input type="checkbox" id="faq1">
+      <label class="faq-question" for="faq1">
+        Do you personalize the game to my liking?
+        <span class="faq-icon">+</span>
+      </label>
+      <div class="faq-answer">
+        Yes, I will change certain type of thing. For example, color of the walls, Size of trees etc. But I will not be recreating the stuff which have already been made. If you request multiple revisions, price may vary depending on the complexity. Please contact me for more information.
+      </div>
+    </div>
+
+    <!-- Soru 2 -->
+    <div class="faq-item">
+      <input type="checkbox" id="faq2">
+      <label class="faq-question" for="faq2">
+        Do you use free models in your builds?
+        <span class="faq-icon">+</span>
+      </label>
+      <div class="faq-answer">
+        Absolutely not. Every single asset, map, and script I provide is 100% custom-made by me to ensure high quality and zero virus risk for your game.
+      </div>
+    </div>
+
+    <!-- Soru 3 -->
+   
+
+    <!-- Soru 4 -->
+    <div class="faq-item">
+      <input type="checkbox" id="faq3">
+      <label class="faq-question" for="faq3">
+        What payment methods do you accept?
+        <span class="faq-icon">+</span>
+      </label>
+      <div class="faq-answer">
+        I prefer payments through Wise due to its low fees and fast processing. I offer %5 discount for Wise. You can also pay through Fiverr, which accepts PayPal.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <span>© Poppy 3:36 Studios — Roblox Developer & GFX Designer</span>
+  <span>scripting · building · modeling · gfx</span>
+</footer>
+
+</body>
+</html>
