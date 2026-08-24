@@ -474,31 +474,35 @@
 </head>
 <body>
 <!-- FOTOĞRAF DEĞİŞKENLERİ BURADA -->
+<!-- FOTOĞRAF DEĞİŞKENLERİ BURADA -->
 <script>
-const fotograflar = {
-    "quasar-1": "images/qc1.png",
-    "quasar-2": "images/qc2.png",
-    "quasar-3": "images/qc3.png",
-    "quasar-4": "images/qc5.png",
+  // Sayfadaki tüm kutular yüklendikten SONRA fotoğrafları yerleştir
+  document.addEventListener("DOMContentLoaded", () => {
+    const fotograflar = {
+      // Quasar Cafe Fotoğrafları
+      "quasar-1": "images/qc1.png",
+      "quasar-2": "images/qc2.png",
+      "quasar-3": "images/qc3.png",
+      "quasar-4": "images/qc5.png",
 
-    // Other Projects (GFX) Fotoğrafları
-    "gfx-1": "images/bbc.png",
-    "gfx-2": "images/bbc1.png",
-    "gfx-3": "images/tast1.png",
-    "gfx-4": "images/v1.png",
-    "gfx-5": "images/v2.png",
-    "gfx-6": "images/cc.png",
-    "gfx-7": "images/pet1.png",
-    "gfx-8": "images/pet2.png",
-    "gfx-9": "images/qc.png" 
-  
-  };
-  // Bu kod yukarıdaki linkleri otomatik olarak HTML'e yerleştirir
-  Object.keys(fotograflar).forEach(id => {
-    const imgElement = document.getElementById(id);
-    if (imgElement) {
-      imgElement.src = fotograflar[id];
-    }
+      // Other Projects (GFX) Fotoğrafları
+      "gfx-1": "images/bbc.png",
+      "gfx-2": "images/bbc1.png",
+      "gfx-3": "images/tast1.png",
+      "gfx-4": "images/v1.png",
+      "gfx-5": "images/v2.png",
+      "gfx-6": "images/cc.png",
+      "gfx-7": "images/pet1.png",
+      "gfx-8": "images/pet2.png",
+      "gfx-9": "images/qc.png" 
+    };
+
+    Object.keys(fotograflar).forEach(id => {
+      const imgElement = document.getElementById(id);
+      if (imgElement) {
+        imgElement.src = fotograflar[id];
+      }
+    });
   });
 </script>
 <nav>
