@@ -324,21 +324,21 @@
 
   /* MARQUEE - cafe LED board */
 /* MARQUEE - cafe LED board */
-  .marquee-wrap{
-    margin-top:70px; 
-    border-top:1px solid var(--line); 
-    border-bottom:1px solid var(--line);
-    padding:16px 0; 
-    overflow:hidden; 
-    background:var(--bg-panel);
+/* MARQUEE - cafe LED board */
+  .marquee-wrap {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
+    overflow: hidden;
+    background: var(--bg-panel);
     
-    /* YENİ EKLENEN KODLAR (Ekrana Tam Oturtmak İçin) */
-    width: 100vw; 
-    position: relative;
+    /* YENİ EKLENEN KODLAR: Ana bölümün en altına sabitlemek için */
+    position: absolute;
+    bottom: 0;
     left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+    transform: translateX(-50%);
+    width: 100vw;
+    margin: 0;
   }
   .marquee{display:flex; width:max-content; animation:scroll 26s linear infinite;}
   .marquee span{
