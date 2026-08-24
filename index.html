@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+ <meta name="darkreader-lock">
 <title>Poppy — Roblox Developer & GFX Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,6 +26,16 @@
     --bg-panel3: #fdfdfd;
     --titles:#b8e5ff;
     --faqs:#0076de;
+  }
+
+  /* Kaydırma çubuğunu (scrollbar) tamamen gizleme */
+  html, body {
+    -ms-overflow-style: none;  /* IE ve eski Edge için */
+    scrollbar-width: none;  /* Firefox için */
+  }
+
+  html::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera ve yeni Edge için */
   }
   /* PRICING DISCOUNT BADGES & PRICES */
   .discount-badge {
