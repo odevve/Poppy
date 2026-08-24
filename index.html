@@ -403,6 +403,14 @@
     transition:border-color .25s, transform .25s;
     aspect-ratio:4/3;
   }
+  .placeholder-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Fotoğrafı orantısını bozmadan kutuya tam sığdırır */
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   .placeholder-tile:hover{border-color:var(--pink); transform:translateY(-4px);}
   .placeholder-tile svg{width:26px; height:26px; opacity:.5;}
   .placeholder-tile span{
@@ -457,7 +465,34 @@
 </style>
 </head>
 <body>
+<!-- FOTOĞRAF DEĞİŞKENLERİ BURADA -->
+<script>
+const fotograflar = {
+    // Quasar Cafe Fotoğrafları
+    "quasar-1": "https://i.imgur.com/7GgovS9.png",
+    "quasar-2": "https://i.imgur.com/s3jOAJ7.png",
+    "quasar-3": "https://i.imgur.com/sCNRXAs.png",
+    "quasar-4": "https://i.imgur.com/zEkHgAH.png",
 
+    // GFX Fotoğrafları
+    "gfx-1": "https://i.imgur.com/vdgtOHv.png",
+    "gfx-2": "https://i.imgur.com/ygLo6EG.png",
+    "gfx-3": "https://i.imgur.com/FAR42eq.png",
+    "gfx-4": "https://i.imgur.com/ejTxaBS.png",
+    "gfx-5": "https://i.imgur.com/CNpcgty.png",
+    "gfx-6": "https://i.imgur.com/y7tsHg4.png",
+    "gfx-7": "https://i.imgur.com/GUzWZ0I.png",
+    "gfx-8": "https://i.imgur.com/3FfVg6t.png",
+    "gfx-9": "https://i.imgur.com/rLSnKQA.png"
+  };
+  // Bu kod yukarıdaki linkleri otomatik olarak HTML'e yerleştirir
+  Object.keys(fotograflar).forEach(id => {
+    const imgElement = document.getElementById(id);
+    if (imgElement) {
+      imgElement.src = fotograflar[id];
+    }
+  });
+</script>
 <nav>
   <div class="brand"><span class="brand-dot"></span>Poppy</div>
   <div class="nav-links">
@@ -533,31 +568,57 @@
       <span class="badge-num">10,000 MEMBERS</span>
     </div>
     <div class="gallery-4">
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>QUASAR CAFE — IMAGE 1</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>QUASAR CAFE — IMAGE 2</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>QUASAR CAFE — IMAGE 3</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>QUASAR CAFE — IMAGE 4</span></div>
+      <div class="placeholder-tile">
+        <img id="quasar-1" alt="QUASAR CAFE — IMAGE 1">
+      </div>
+      <div class="placeholder-tile">
+        <img id="quasar-2" alt="QUASAR CAFE — IMAGE 2">
+      </div>
+      <div class="placeholder-tile">
+        <img id="quasar-3" alt="QUASAR CAFE — IMAGE 3">
+      </div>
+      <div class="placeholder-tile">
+        <img id="quasar-4" alt="QUASAR CAFE — IMAGE 4">
+      </div>
     </div>
   </div>
 
   <div class="gfx-head">
     <div class="project-feature-head">
       <div>
-        <h3>GFX Commissions</h3>
-        <p>A selection of GFX works I've created for various Roblox groups.</p>
+        <h3>Other Projects</h3>
+        <p>A selection of projects I've created for various Roblox groups.</p>
       </div>
       <span class="badge-num">9 WORKS</span>
     </div>
     <div class="gallery-grid">
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 01</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 02</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 03</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 04</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 05</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 06</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 07</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 08</span></div>
-      <div class="placeholder-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>GFX 09</span></div>
+      <div class="placeholder-tile">
+        <img id="gfx-1" alt="GFX 01">
+      </div>
+      <div class="placeholder-tile">
+        <img id="gfx-2" alt="GFX 02">
+      </div>
+      <div class="placeholder-tile">
+        <img id="gfx-3" alt="GFX 03">
+      </div>
+      <div class="placeholder-tile">
+        <img id="gfx-4" alt="GFX 04">
+      </div>
+      <div class="placeholder-tile">
+        <img id="gfx-5" alt="GFX 05">
+      </div>
+      <div class="placeholder-tile">
+        <img id="gfx-6" alt="GFX 06">
+      </div>
+      <div class="placeholder-tile">
+        <img id="gfx-7" alt="GFX 07">
+      </div>
+      <div class="placeholder-tile">
+        <img id="gfx-8" alt="GFX 08">
+      </div>
+      <div class="placeholder-tile">
+        <img id="gfx-9" alt="GFX 09">
+      </div>
     </div>
   </div>
 </section>
