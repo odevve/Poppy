@@ -11,6 +11,60 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
 <style>
+/* ARKA PLAN DÖNEN HALKA (Orbit) EFEKTİ */
+  .hero-orbit {
+    position: absolute;
+    width: 580px;
+    height: 580px;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Çok hafif beyaz bir halka */
+    border-radius: 50%;
+    top: 50%;
+    left: 110%;
+    transform: translate(-50%, -50%);
+    animation: spin 35s linear infinite;
+    pointer-events: none; /* Tıklamaları engellemesin diye */
+    z-index: -1; /* Yazıların arkasında kalsın */
+  }
+
+  /* İlk parlayan nokta (Sol üst kısım) */
+  .hero-orbit::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--actualglowingdot); /* Sitenin parlak turkuaz rengi */
+    box-shadow: 0 0 20px var(--actualglowingdot), 0 0 40px var(--actualglowingdot);
+    left: 15%; 
+    top: 10%;
+  }
+
+  /* İkinci parlayan nokta (Tam karşısı - Sağ alt kısım) */
+  .hero-orbit::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--actualglowingdot); 
+    box-shadow: 0 0 20px var(--actualglowingdot), 0 0 40px var(--actualglowingdot);
+    right: 15%; /* left'in tam zıttı */
+    bottom: 10%; /* top'ın tam zıttı */
+  }
+
+  /* Dönme animasyonu */
+  @keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  /* Mobilde halkayı biraz küçültelim ki ekrandan çok taşmasın */
+  @media (max-width: 900px) {
+    .hero-orbit {
+      width: 500px;
+      height: 500px;
+    }
+  }
   .placeholder-tile img {
     width: 100%;
     height: 100%;
@@ -520,6 +574,7 @@
 </nav>
 
 <section class="hero" id="home">
+  <div class="hero-orbit"></div>
   <div class="open-sign">currently available · roblox dev</div>
   <h1 class="display">Poppy</h1>
   <p class="hero-sub">Hi, I'm <strong>Poppy</strong>. I've been developing games on Roblox since 2019, working in <strong>scripting, building, modeling, and GFX</strong>. I've been hired by many cafe and restaurant group owners.</p>
